@@ -1,6 +1,6 @@
 {
   "name": "tree-from-paths",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Convert a list of paths into a archy directory-tree",
   "repository": {
     "type": "git",

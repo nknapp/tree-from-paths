@@ -20,14 +20,17 @@
   "scripts": {
     "lint": "eslint --fix .",
     "test": "mocha && npm run lint",
-    "coverage": "istanbul cover ./node_modules/.bin/_mocha --report lcovonly",
+    "coverage": "istanbul cover ./node_modules/.bin/_mocha",
     "postcoverage": "istanbul check-coverage coverage/coverage.json --statements 100",
     "prethought": "thought --version || npm -g install thought",
     "thought": "thought run -a",
     "preversion": "thought --version || npm -g install thought",
     "version": "thoughtful changelog -o -a && npm run thought"
   },
-  "dependencies": {},
+  "dependencies": {
+    "archy": "^1.0.0",
+    "lodash.groupby": "^4.6.0"
+  },
   "devDependencies": {
     "chai": "^3.5.0",
     "dirty-chai": "^1.2.2",

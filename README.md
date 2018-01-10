@@ -29,7 +29,7 @@ console.log(render(
     'basedir/dir4/dir5/file7.txt'
   ],
   'basedir',
-  (parent, file, explicit) => {
+  (parent, file, explicit, index) => {
     return `<a href='${parent}${file}'>${file}${explicit ? '(*)' : ''}</a>`
   }
 ))

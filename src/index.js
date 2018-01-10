@@ -68,7 +68,7 @@ function render (files, baseDir, renderLabelFn, options = {}) {
  * @returns {object} a tree structure as needed by [archy](https://www.npmjs.com/package/archy)
  * @access private
  */
-function treeFromPaths (files, baseDir, renderLabelFn, options = {}) {  
+function treeFromPaths (files, baseDir, renderLabelFn, options = {}) {
   return {
     label: options.label || '',
     nodes: childNodesFromPaths(files, baseDir, renderLabelFn, files, baseDir)
@@ -83,7 +83,7 @@ function treeFromPaths (files, baseDir, renderLabelFn, options = {}) {
  * @returns {Array}
  */
 function childNodesFromPaths (files, parent, renderLabelFn, originalFiles, baseDir) {
-  // Group by first path element  
+  // Group by first path element
   var groups = _.groupBy(files, file => file.match(/^[^/]*\/?/))
   return Object.keys(groups).map(function (groupKey) {
     const group = groups[groupKey]

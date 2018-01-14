@@ -71,7 +71,7 @@ function render (files, baseDir, renderLabelFn, options = {}) {
 function treeFromPaths (files, baseDir, renderLabelFn, options = {}) {
   return {
     label: options.label || '',
-    nodes: childNodesFromPaths(files, baseDir, renderLabelFn)
+    nodes: childNodesFromPaths(files, baseDir, renderLabelFn, files, baseDir)
   }
 }
 
@@ -82,7 +82,7 @@ function treeFromPaths (files, baseDir, renderLabelFn, options = {}) {
  * @param renderLabelFn
  * @returns {Array}
  */
-function childNodesFromPaths (files, parent, renderLabelFn) {
+function childNodesFromPaths (files, parent, renderLabelFn, originalFiles, baseDir) {
   // Group by first path element
   var groups = _.groupBy(files, file => file.match(/^[^/]*\/?/))
   return Object.keys(groups).map(function (groupKey) {
@@ -90,8 +90,13 @@ function childNodesFromPaths (files, parent, renderLabelFn) {
     // Is this group explicitly part of the result, or
     // just implicit through its children
     const explicit = group.indexOf(groupKey) >= 0
+    let index = -1
+    if (explicit) {
+      index = originalFiles.indexOf(parent.replace(baseDir, '') + groupKey)
+    }
+
     return {
-      label: renderLabelFn(parent, groupKey, explicit),
+      label: renderLabelFn(parent, groupKey, explicit, explicit ? index : -1),
       nodes: childNodesFromPaths(
         // Remove parent directory from file paths
         group
@@ -100,7 +105,9 @@ function childNodesFromPaths (files, parent, renderLabelFn) {
           .filter(node => node),
         // New parent..., normalize to one trailing slash
         parent + groupKey,
-        renderLabelFn
+        renderLabelFn,
+        originalFiles,
+        baseDir
       )
     }
   })

@@ -68,6 +68,46 @@ describe('the render function', function () {
 `)
   })
 
+  const files2 = [
+    {
+      path: 'basedir/dir1/file1.txt',
+      created: true
+    },
+    {
+      path: 'basedir/dir1/file2.txt'
+    },
+    {
+      path: 'basedir/dir2/file3.txt'
+    },
+    {
+      path: 'basedir/dir3/'
+    },
+    {
+      path: 'basedir/dir3/file4.txt',
+      created: true
+    },
+    {
+      path: 'basedir/dir3/file5.txt'
+    },
+    {
+      path: 'basedir/dir4/dir5/file7.txt'
+    }
+  ]
+  it('should pass array index to the render-function (or -1 if not in files array)', function () {
+    expect(treeFromPaths.render(files2.map(file => file.path), 'basedir/', (parent, file, explicit, index) => file + (index >= 0 && files2[index].created ? '*' : ''))).to.equal(`
+├─┬ dir1/
+│ ├── file1.txt*
+│ └── file2.txt
+├─┬ dir2/
+│ └── file3.txt
+├─┬ dir3/
+│ ├── file4.txt*
+│ └── file5.txt
+└─┬ dir4/dir5/
+  └── file7.txt
+`)
+  })
+
   it('should add an optional label to the root-node', function () {
     expect(treeFromPaths.render(
       [
